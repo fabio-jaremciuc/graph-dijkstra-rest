@@ -5,12 +5,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.graphexample.exception.ApiErrorCode;
 import com.spring.graphexample.exception.ApiErrorHandler;
+import com.spring.graphexample.mapper.MapperImpl;
 import com.spring.graphexample.model.Candidate;
 import com.spring.graphexample.model.JobApplication;
 import com.spring.graphexample.model.JobVacancy;
@@ -26,17 +28,22 @@ public class GraphProjectController {
 	@Autowired
 	private ApiErrorHandler error;
 	
-	@GetMapping(value = {"/candidate"}, 
+	@Autowired
+	private MapperImpl dbMapperImpl;
+	
+	@PostMapping(value = {"/candidate"}, 
 				produces = "application/json")
 	ResponseEntity<Object> putCandidate(@RequestBody Candidate candidate, HttpServletRequest request) {
 		if (!validation.candidateFieldsVerify(candidate)) {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
 		
+		dbMapperImpl.insertCandidateData(candidate);
+		
 		return ResponseEntity.ok("Ok");
 	}
 
-	@GetMapping(value = {"/vacancy"}, 
+	@PostMapping(value = {"/vacancy"}, 
 				produces = "application/json")
 	ResponseEntity<Object> putJobVacancies(@RequestBody JobVacancy jobVacancy, HttpServletRequest request) {
 		if (!validation.jobVacancyFieldsVerify(jobVacancy)) {
@@ -46,7 +53,7 @@ public class GraphProjectController {
 		return ResponseEntity.ok("Ok");
 	}
 
-	@GetMapping(value = {"/application"}, 
+	@PostMapping(value = {"/application"}, 
 				produces = "application/json")
 	ResponseEntity<Object> putJobApplication(@RequestBody JobApplication jobApplication, HttpServletRequest request) {
 		if (!validation.jobApplicationFieldsVerify(jobApplication)) {
