@@ -9,10 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JobVacancy {
 
+	private Integer jobCompanyId;
 	private String jobCompany;
 	private String jobTitle;
 	private String jobDescription;
 	private String jobLocation;
 	private Integer jobLevel;
+
+	public void setJobLocation(String jobLocation) {
+		this.jobLocation = jobLocation.toUpperCase();
+	}
 	
 }

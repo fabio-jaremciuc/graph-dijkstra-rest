@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +13,15 @@ import com.spring.graphexample.exception.ApiErrorCode;
 import com.spring.graphexample.exception.ApiErrorHandler;
 import com.spring.graphexample.mapper.MapperImpl;
 import com.spring.graphexample.model.Candidate;
+import com.spring.graphexample.model.CandidateSuccessResp;
 import com.spring.graphexample.model.JobApplication;
+import com.spring.graphexample.model.JobSuccessResp;
 import com.spring.graphexample.model.JobVacancy;
 import com.spring.graphexample.utils.ModelFieldsValidation;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("v1")
 public class GraphProjectController {
@@ -33,29 +37,41 @@ public class GraphProjectController {
 	
 	@PostMapping(value = {"/candidate"}, 
 				produces = "application/json")
-	ResponseEntity<Object> putCandidate(@RequestBody Candidate candidate, HttpServletRequest request) {
+	ResponseEntity<Object> insertCandidate(@RequestBody Candidate candidate, HttpServletRequest request) {
 		if (!validation.candidateFieldsVerify(candidate)) {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
 		
-		dbMapperImpl.insertCandidateData(candidate);
+		try {
+			dbMapperImpl.insertCandidateData(candidate);
+		} catch (Exception ex) {
+			log.error("Error:", ex);
+			return error.handleApiErrorException(ex);
+		}
 		
-		return ResponseEntity.ok("Ok");
+		return ResponseEntity.ok().body(new CandidateSuccessResp().candidateSuccess(candidate));
 	}
 
 	@PostMapping(value = {"/vacancy"}, 
 				produces = "application/json")
-	ResponseEntity<Object> putJobVacancies(@RequestBody JobVacancy jobVacancy, HttpServletRequest request) {
+	ResponseEntity<Object> insertJobVacancies(@RequestBody JobVacancy jobVacancy, HttpServletRequest request) {
 		if (!validation.jobVacancyFieldsVerify(jobVacancy)) {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
 		
-		return ResponseEntity.ok("Ok");
+		try {
+			dbMapperImpl.insertJobVacancyData(jobVacancy);
+		} catch (Exception ex) {
+			log.error("Error:", ex);
+			return error.handleApiErrorException(ex);
+		}
+		
+		return ResponseEntity.ok().body(new JobSuccessResp().jobSuccess(jobVacancy));
 	}
 
 	@PostMapping(value = {"/application"}, 
 				produces = "application/json")
-	ResponseEntity<Object> putJobApplication(@RequestBody JobApplication jobApplication, HttpServletRequest request) {
+	ResponseEntity<Object> insertJobApplication(@RequestBody JobApplication jobApplication, HttpServletRequest request) {
 		if (!validation.jobApplicationFieldsVerify(jobApplication)) {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
