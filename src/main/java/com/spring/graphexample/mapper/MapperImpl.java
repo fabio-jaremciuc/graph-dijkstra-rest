@@ -12,20 +12,19 @@ public class MapperImpl implements GraphProjectMapper {
     @Autowired
     private GraphProjectMapper graphMapper;
 	
-	public Candidate insertCandidateData(Candidate candidate) {
+	public Integer insertCandidateData(Candidate candidate) {
 		return graphMapper.insertCandidateData(candidate);
+	}
+
+	public Candidate selectCandidateData() {
+		return graphMapper.selectCandidateData();
 	}
 
 	public JobVacancy insertJobVacancyData(JobVacancy jobVacancy) {
 		return graphMapper.insertJobVacancyData(jobVacancy);
 	}
 
-	public Candidate selectCandidate(int candidateId) {
-		return graphMapper.selectCandidate(candidateId);
-	}
-
 	public JobVacancy selectJobVacancyData(int jobVacancyId) {
 		return graphMapper.selectJobVacancyData(jobVacancyId);
 	}
-
 }

@@ -42,14 +42,15 @@ public class GraphProjectController {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
 		
+		Candidate candidateData = null;
 		try {
-			dbMapperImpl.insertCandidateData(candidate);
+			int candidateInsertId = dbMapperImpl.insertCandidateData(candidate);
+			candidateData = dbMapperImpl.selectCandidateData();
 		} catch (Exception ex) {
-			log.error("Error:", ex);
 			return error.handleApiErrorException(ex);
 		}
 		
-		return ResponseEntity.ok().body(new CandidateSuccessResp().candidateSuccess(candidate));
+		return ResponseEntity.ok().body(new CandidateSuccessResp().candidateSuccess(candidateData));
 	}
 
 	@PostMapping(value = {"/vacancy"}, 

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Candidate {
 
-	private Integer candidateNameId;
+	private Integer candidateId;
 	private String candidateName;
 	private String candidateOccupation;
 	private String candidateLocation;
