@@ -44,12 +44,12 @@ public class GraphProjectController {
 		
 		Candidate candidateData = null;
 		try {
-			int candidateInsertId = dbMapperImpl.insertCandidateData(candidate);
-			candidateData = dbMapperImpl.selectCandidateData();
+			dbMapperImpl.insertCandidateData(candidate);
+//			candidateData = dbMapperImpl.selectCandidateData(candidateInsertId);
+			
 		} catch (Exception ex) {
 			return error.handleApiErrorException(ex);
 		}
-		
 		return ResponseEntity.ok().body(new CandidateSuccessResp().candidateSuccess(candidateData));
 	}
 
@@ -60,12 +60,12 @@ public class GraphProjectController {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
 		
-		try {
-			dbMapperImpl.insertJobVacancyData(jobVacancy);
-		} catch (Exception ex) {
-			log.error("Error:", ex);
-			return error.handleApiErrorException(ex);
-		}
+//		try {
+//			dbMapperImpl.insertJobVacancyData(jobVacancy);
+//		} catch (Exception ex) {
+//			log.error("Error:", ex);
+//			return error.handleApiErrorException(ex);
+//		}
 		
 		return ResponseEntity.ok().body(new JobSuccessResp().jobSuccess(jobVacancy));
 	}
