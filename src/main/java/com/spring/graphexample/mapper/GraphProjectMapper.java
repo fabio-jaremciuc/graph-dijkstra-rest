@@ -16,7 +16,9 @@ import com.spring.graphexample.model.JobVacancy;
 public interface GraphProjectMapper {
 	
 //	@Options(useGeneratedKeys=true, keyProperty="candidateId", keyColumn="CANDIDATE_ID")
- 
+	
+	//https://stackoverflow.com/questions/14827783/auto-increment-and-last-insert-id
+	SELECT max(employeeid) FROM Employee;
 	@Insert({
 		"INSERT INTO CANDIDATE(CANDIDATE_NAME, CANDIDATE_OCCUPATION, CANDIDATE_LOCATION, "
 		+ "CANDIDATE_LEVEL, CANDIDATE_APP_POSITION)",
@@ -27,8 +29,6 @@ public interface GraphProjectMapper {
 		+ "#{candidateLevel},"
 		+ "#{candidateAppPosition});"
 	})
-	@SelectKey(statement="SELECT CANDIDATE.CANDIDATE_ID FROM CANDIDATE WHERE CANDIDATE_ID = #{candidateId};", 
-		keyProperty="candidateId", before=true, resultType=Integer.class)
 	public int insertCandidateData(Candidate candidate);
 
 	@Select({"SELECT * FROM CANDIDATE WHERE CANDIDATE_ID = #{candidateId};"})
