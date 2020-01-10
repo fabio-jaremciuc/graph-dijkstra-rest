@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.graphexample.exception.ApiErrorCode;
 import com.spring.graphexample.exception.ApiErrorHandler;
+import com.spring.graphexample.graph.GraphCalc;
+import com.spring.graphexample.graph.NodeWeighted;
 import com.spring.graphexample.mapper.MapperImpl;
 import com.spring.graphexample.model.Candidate;
 import com.spring.graphexample.model.CandidateSuccessResp;
@@ -45,8 +47,7 @@ public class GraphProjectController {
 		Candidate candidateData = null;
 		try {
 			dbMapperImpl.insertCandidateData(candidate);
-//			candidateData = dbMapperImpl.selectCandidateData(candidateInsertId);
-			
+			candidateData = dbMapperImpl.selectCandidateData(dbMapperImpl.getCandidateDataId());
 		} catch (Exception ex) {
 			return error.handleApiErrorException(ex);
 		}
@@ -60,14 +61,16 @@ public class GraphProjectController {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
 		
-//		try {
-//			dbMapperImpl.insertJobVacancyData(jobVacancy);
-//		} catch (Exception ex) {
-//			log.error("Error:", ex);
-//			return error.handleApiErrorException(ex);
-//		}
+		JobVacancy jobVacancyData = null;
+		try {
+			dbMapperImpl.insertJobVacancyData(jobVacancy);
+			jobVacancyData = dbMapperImpl.selectJobVacancyData(dbMapperImpl.getJobDataId());
+		} catch (Exception ex) {
+			log.error("Error:", ex);
+			return error.handleApiErrorException(ex);
+		}
 		
-		return ResponseEntity.ok().body(new JobSuccessResp().jobSuccess(jobVacancy));
+		return ResponseEntity.ok().body(new JobSuccessResp().jobSuccess(jobVacancyData));
 	}
 
 	@PostMapping(value = {"/application"}, 
@@ -76,7 +79,23 @@ public class GraphProjectController {
 		if (!validation.jobApplicationFieldsVerify(jobApplication)) {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
+		
+		try {
+			Candidate candidateData = dbMapperImpl.selectCandidateData(jobApplication.getIdCandidate());
+			JobVacancy jobVacancyData = dbMapperImpl.selectJobVacancyData(jobApplication.getIdVacancy());
+		} catch (Exception ex) {
+			return error.handleApiErrorException(ex);
+		}
+		
+		GraphCalc graphCalc = new GraphCalc();
+		
 
+		
+//		Double test = graphCalc.getShortestPath(candidateData.getCandidateLocation(), jobApplication.getIdVacancy());
+		Double test = graphCalc.getShortestPath(new NodeWeighted("A"), new NodeWeighted("G"));
+		log.info("shortest path: {}", test);
+
+		
 		return ResponseEntity.ok("Ok");
 	}
 	

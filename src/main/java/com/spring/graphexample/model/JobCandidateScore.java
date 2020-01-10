@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class JobAppSuccessResp {
+public class JobCandidateScore {
 
 	private String status;
 	private String message;

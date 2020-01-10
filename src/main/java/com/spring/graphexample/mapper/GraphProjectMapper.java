@@ -2,12 +2,10 @@ package com.spring.graphexample.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
 
 import com.spring.graphexample.model.Candidate;
 import com.spring.graphexample.model.JobVacancy;
@@ -15,10 +13,6 @@ import com.spring.graphexample.model.JobVacancy;
 @Mapper
 public interface GraphProjectMapper {
 	
-//	@Options(useGeneratedKeys=true, keyProperty="candidateId", keyColumn="CANDIDATE_ID")
-	
-	//https://stackoverflow.com/questions/14827783/auto-increment-and-last-insert-id
-	SELECT max(employeeid) FROM Employee;
 	@Insert({
 		"INSERT INTO CANDIDATE(CANDIDATE_NAME, CANDIDATE_OCCUPATION, CANDIDATE_LOCATION, "
 		+ "CANDIDATE_LEVEL, CANDIDATE_APP_POSITION)",
@@ -29,8 +23,11 @@ public interface GraphProjectMapper {
 		+ "#{candidateLevel},"
 		+ "#{candidateAppPosition});"
 	})
-	public int insertCandidateData(Candidate candidate);
+	public void insertCandidateData(Candidate candidate);
 
+	@Select({"SELECT MAX(CANDIDATE_ID) FROM CANDIDATE;"})
+	public int getCandidateDataId();
+	
 	@Select({"SELECT * FROM CANDIDATE WHERE CANDIDATE_ID = #{candidateId};"})
 	@Results(value = {
 			@Result(property = "candidateId", column = "CANDIDATE_ID"),
@@ -42,19 +39,30 @@ public interface GraphProjectMapper {
 	})
 	public Candidate selectCandidateData(@Param("candidateId") Integer candidateId);
 	
-//	@Select({
-//		"INSERT INTO COMPANY(JOB_COMPANY, JOB_TITLE, JOB_DESCRIPTION, JOB_LOCATION, JOB_LEVEL)",
-//		"VALUES("
-//		+ "#{jobCompany},"
-//		+ "#{jobTitle}, "
-//		+ "#{jobDescription}, "
-//		+ "#{jobLocation},"
-//		+ "#{jobLevel});"
-//	})
-//	public JobVacancy insertJobVacancyData(JobVacancy jobVacancy);
-//
-//	@Select({
-//		"SELECT * FROM CANDIDATE WHERE CANDIDATE_ID = #{jobVacancyId};"
-//	})
-//	public JobVacancy selectJobVacancyData(int jobVacancyId);
+	@Insert({
+		"INSERT INTO JOB(JOB_COMPANY, JOB_TITLE, JOB_DESCRIPTION, JOB_LOCATION, JOB_LEVEL)",
+		"VALUES("
+		+ "#{jobCompany},"
+		+ "#{jobTitle}, "
+		+ "#{jobDescription}, "
+		+ "#{jobLocation},"
+		+ "#{jobLevel});"
+	})
+	public void insertJobVacancyData(JobVacancy jobVacancy);
+
+	@Select({"SELECT MAX(JOB_ID) FROM JOB;"})
+	public int getJobDataId();
+	
+	@Select({
+		"SELECT * FROM JOB WHERE JOB_ID = #{jobCompanyId};"
+	})
+	@Results(value = {
+			@Result(property = "jobCompanyId", column = "JOB_ID"),
+			@Result(property = "jobCompany", column = "JOB_COMPANY"),
+			@Result(property = "jobTitle", column = "JOB_TITLE"),
+			@Result(property = "jobDescription", column = "JOB_DESCRIPTION"),
+			@Result(property = "jobLocation", column = "JOB_LOCATION"),
+			@Result(property = "jobLevel", column = "JOB_LEVEL")
+	})
+	public JobVacancy selectJobVacancyData(@Param("jobCompanyId") Integer jobCompanyId);
 }
