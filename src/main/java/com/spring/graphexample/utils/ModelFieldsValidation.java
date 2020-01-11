@@ -14,7 +14,7 @@ public class ModelFieldsValidation {
 		if (StringUtils.isNotEmpty(candidate.getCandidateName()) &&
 			StringUtils.isNotEmpty(candidate.getCandidateOccupation()) &&
 			StringUtils.isNotEmpty(candidate.getCandidateLocation()) &&
-			candidate.getCandidateLevel() != null && candidate.getCandidateLevel() != 0 &&
+			candidate.getCandidateLevel() != 0 &&
 			StringUtils.isNotEmpty(candidate.getCandidateAppPosition())) {			
 			return true;
 		} else {
@@ -27,7 +27,7 @@ public class ModelFieldsValidation {
 			StringUtils.isNotEmpty(jobVacancy.getJobTitle()) &&
 			StringUtils.isNotEmpty(jobVacancy.getJobDescription()) &&
 			StringUtils.isNotEmpty(jobVacancy.getJobLocation()) &&
-			jobVacancy.getJobLevel() != null && jobVacancy.getJobLevel() != 0) {			
+			jobVacancy.getJobLevel() != 0) {			
 			return true;
 		} else {
 			return false;
@@ -35,8 +35,7 @@ public class ModelFieldsValidation {
 	}
 
 	public boolean jobApplicationFieldsVerify(JobApplication jobApplication) {
-		if (jobApplication.getIdCandidate() != null && jobApplication.getIdCandidate() != 0 &&
-				jobApplication.getIdVacancy() != null && jobApplication.getIdVacancy() != 0) {			
+		if (jobApplication.getIdCandidate() != 0 && jobApplication.getIdVacancy() != 0) {			
 			return true;
 		} else {
 			return false;

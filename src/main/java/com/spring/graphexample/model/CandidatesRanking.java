@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CandidatesRanking {
 
-	private List<Candidate> candidatesRanking;
+	private List<CandidateRanked> candidatesRanking;
 
 }

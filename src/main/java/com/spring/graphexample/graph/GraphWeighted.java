@@ -97,7 +97,7 @@ public class GraphWeighted {
 		}
 	}
 
-	public Double DijkstraShortestPath(NodeWeighted start, NodeWeighted end) {
+	public Double dijkstraShortestPath(NodeWeighted start, NodeWeighted end) {
 		// We keep track of which path gives us the shortest path for each node
 		// by keeping track how we arrived at a particular node, we effectively
 		// keep a "pointer" to the parent node of each node, and we follow that

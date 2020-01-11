@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.spring.graphexample.model.Candidate;
+import com.spring.graphexample.model.CandidateRanked;
 import com.spring.graphexample.model.JobVacancy;
 
 @Component
@@ -34,6 +35,10 @@ public class MapperImpl implements GraphProjectMapper {
 
 	public JobVacancy selectJobVacancyData(Integer jobVacancyId) {
 		return graphMapper.selectJobVacancyData(jobVacancyId);
+	}
+
+	public void insertRankingData(CandidateRanked candidateRanked) {
+		graphMapper.insertRankingData(candidateRanked);
 	}
 
 

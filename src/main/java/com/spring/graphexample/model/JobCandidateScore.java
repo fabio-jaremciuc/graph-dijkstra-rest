@@ -11,6 +11,6 @@ public class JobCandidateScore {
 	private String message;
 	private JobVacancy jobVacancy;
 	private Candidate candidate;
-	private Integer score;
+	private int score;
 	
 }

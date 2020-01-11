@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.graphexample.exception.ApiErrorCode;
 import com.spring.graphexample.exception.ApiErrorHandler;
+import com.spring.graphexample.exception.ErrorDetail;
 import com.spring.graphexample.graph.GraphCalc;
 import com.spring.graphexample.graph.NodeWeighted;
 import com.spring.graphexample.mapper.MapperImpl;
 import com.spring.graphexample.model.Candidate;
+import com.spring.graphexample.model.CandidateRanked;
 import com.spring.graphexample.model.CandidateSuccessResp;
 import com.spring.graphexample.model.JobApplication;
 import com.spring.graphexample.model.JobSuccessResp;
 import com.spring.graphexample.model.JobVacancy;
+import com.spring.graphexample.service.GraphService;
 import com.spring.graphexample.utils.ModelFieldsValidation;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +39,9 @@ public class GraphProjectController {
 	
 	@Autowired
 	private MapperImpl dbMapperImpl;
+
+	@Autowired
+	private GraphService graphService;
 	
 	@PostMapping(value = {"/candidate"}, 
 				produces = "application/json")
@@ -76,27 +82,51 @@ public class GraphProjectController {
 	@PostMapping(value = {"/application"}, 
 				produces = "application/json")
 	ResponseEntity<Object> insertJobApplication(@RequestBody JobApplication jobApplication, HttpServletRequest request) {
+		GraphCalc graphCalc = new GraphCalc();
+		Candidate candidateData = null;
+		JobVacancy jobVacancyData = null;
+		
 		if (!validation.jobApplicationFieldsVerify(jobApplication)) {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
 		
 		try {
-			Candidate candidateData = dbMapperImpl.selectCandidateData(jobApplication.getIdCandidate());
-			JobVacancy jobVacancyData = dbMapperImpl.selectJobVacancyData(jobApplication.getIdVacancy());
+			candidateData = dbMapperImpl.selectCandidateData(jobApplication.getIdCandidate());
+			jobVacancyData = dbMapperImpl.selectJobVacancyData(jobApplication.getIdVacancy());
 		} catch (Exception ex) {
 			return error.handleApiErrorException(ex);
 		}
 		
-		GraphCalc graphCalc = new GraphCalc();
+//		if (candidateData == null || jobVacancyData == null) {
+//			return ResponseEntity.status(500).body(new ErrorDetail("Error", 500, "Bad Request - "
+//					+ "database has no data regarding this job application."));
+//		}
 		
-
+//		Double test = graphCalc.getShortestPath(new NodeWeighted(candidateData.getCandidateLocation()), 
+//				new NodeWeighted(jobVacancyData.getJobLocation()));
+		Double shortestPath = graphCalc.getShortestPath(new NodeWeighted("A"), 
+				new NodeWeighted("G"));
 		
-//		Double test = graphCalc.getShortestPath(candidateData.getCandidateLocation(), jobApplication.getIdVacancy());
-		Double test = graphCalc.getShortestPath(new NodeWeighted("A"), new NodeWeighted("G"));
-		log.info("shortest path: {}", test);
-
+		if (shortestPath == 0.0) {
+			return ResponseEntity.status(500).body(new ErrorDetail("Error", 500, "Bad Request - Inserted nodes "
+					+ "have no connection or are not registered in the system"));
+		}
+		
+		int experienceCandidateLevel = graphService.calcExpirenceLevel(candidateData.getCandidateLevel(), 
+				jobVacancyData.getJobLevel());
+		int candidateFinalScore = graphService.calcScoreCandidate(experienceCandidateLevel, shortestPath);
+		dbMapperImpl.insertRankingData(setCandidateRankedData(candidateData, candidateFinalScore));
 		
 		return ResponseEntity.ok("Ok");
+	}
+
+	private CandidateRanked setCandidateRankedData(Candidate candidateData, int candidateFinalScore) {
+		CandidateRanked candidateRanked = new CandidateRanked();
+		candidateRanked.setCandidateId(candidateData.getCandidateId());
+		candidateRanked.setCandidateLevel(candidateData.getCandidateLevel());
+		candidateRanked.setCandidateLocation(candidateData.getCandidateLocation());
+		candidateRanked.setCandidateScore(candidateFinalScore);
+		return candidateRanked;
 	}
 	
 }

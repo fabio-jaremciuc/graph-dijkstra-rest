@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Candidate {
 
-	private Integer candidateId;
+	private int candidateId;
 	private String candidateName;
 	private String candidateOccupation;
 	private String candidateLocation;
-	private Integer candidateLevel;
+	private int candidateLevel;
 	private String candidateAppPosition;
 
 	public void setCandidateLocation(String candidateLocation) {

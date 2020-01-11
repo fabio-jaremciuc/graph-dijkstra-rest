@@ -1,8 +1,8 @@
 package com.spring.graphexample.graph;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,12 +39,21 @@ public class GraphCalc {
 		graphWeighted.addEdge(nodeF, nodeG, 8);
 
 		List<NodeWeighted> nodeList = Arrays.asList(nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG);
-						
-		// works
-		graphWeighted.DijkstraShortestPath(start, stop);
+		List<NodeWeighted> nodeStartFiltered = nodeList.stream()
+														.filter(n -> n.name == start.name)
+														.collect(Collectors.toList());
 
-		//doesnt work
-		return graphWeighted.DijkstraShortestPath(nodeG, nodeG);
+		List<NodeWeighted> nodeStopFiltered = nodeList.stream()
+														.filter(n -> n.name == stop.name)
+														.collect(Collectors.toList());
+		
+		if (nodeStopFiltered != null && nodeStopFiltered.size() > 0 &&
+			nodeStartFiltered != null && nodeStartFiltered.size() > 0) {
+			return graphWeighted.dijkstraShortestPath(nodeStartFiltered.get(0), nodeStopFiltered.get(0));
+		} 
+		else {
+			return 0.0;
+		}
 	}
 
 }

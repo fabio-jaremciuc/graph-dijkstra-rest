@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JobApplication {
 
-	private Integer idVacancy;
-	private Integer idCandidate;
+	private int idVacancy;
+	private int idCandidate;
 	
 }

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import com.spring.graphexample.model.Candidate;
+import com.spring.graphexample.model.CandidateRanked;
 import com.spring.graphexample.model.JobVacancy;
 
 @Mapper
@@ -65,4 +66,15 @@ public interface GraphProjectMapper {
 			@Result(property = "jobLevel", column = "JOB_LEVEL")
 	})
 	public JobVacancy selectJobVacancyData(@Param("jobCompanyId") Integer jobCompanyId);
+	
+	@Insert({
+		"INSERT INTO RANKING(CANDIDATE_ID, CANDIDATE_LOCATION, CANDIDATE_LEVEL, SCORE)",
+		"VALUES("
+		+ "#{candidateId},"
+		+ "#{candidateLocation}, "
+		+ "#{candidateLevel}, "
+		+ "#{candidateScore});"
+	})
+	public void insertRankingData(CandidateRanked candidateRanked);
+	
 }
