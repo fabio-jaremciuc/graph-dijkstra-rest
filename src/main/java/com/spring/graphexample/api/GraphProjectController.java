@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("v1")
-public class GraphProjectController {
+public class GraphProjectController implements GraphProject {
 
 	@Autowired
 	private ModelFieldsValidation validation;
@@ -46,9 +44,7 @@ public class GraphProjectController {
 	@Autowired
 	private GraphService graphService;
 	
-	@PostMapping(value = {"/candidate"}, 
-				produces = "application/json")
-	ResponseEntity<Object> insertCandidate(@RequestBody Candidate candidate, HttpServletRequest request) {
+	public ResponseEntity<Object> insertCandidate(@RequestBody Candidate candidate, HttpServletRequest request) {
 		if (!validation.candidateFieldsVerify(candidate)) {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
@@ -64,9 +60,7 @@ public class GraphProjectController {
 		return ResponseEntity.ok().body(new CandidateSuccessResp().candidateSuccess(candidateData));
 	}
 
-	@PostMapping(value = {"/vacancy"}, 
-				produces = "application/json")
-	ResponseEntity<Object> insertJobVacancies(@RequestBody JobVacancy jobVacancy, HttpServletRequest request) {
+	public ResponseEntity<Object> insertJobVacancies(@RequestBody JobVacancy jobVacancy, HttpServletRequest request) {
 		if (!validation.jobVacancyFieldsVerify(jobVacancy)) {
 			return error.handleApiError(ApiErrorCode.VALIDATION_ERROR);
 		}
@@ -82,9 +76,7 @@ public class GraphProjectController {
 		return ResponseEntity.ok().body(new JobSuccessResp().jobSuccess(jobVacancyData));
 	}
 
-	@PostMapping(value = {"/application"}, 
-				produces = "application/json")
-	ResponseEntity<Object> insertJobApplication(@RequestBody JobApplication jobApplication, HttpServletRequest request) {
+	public ResponseEntity<Object> insertJobApplication(@RequestBody JobApplication jobApplication, HttpServletRequest request) {
 		GraphCalc graphCalc = new GraphCalc();
 		Candidate candidateData = null;
 		JobVacancy jobVacancyData = null;
@@ -126,9 +118,7 @@ public class GraphProjectController {
 		return ResponseEntity.ok().body(candidateRanked);
 	}
 
-	@GetMapping(value = {"/application/ranking"}, 
-			produces = "application/json")
-	ResponseEntity<Object> getApplicationRanking(HttpServletRequest request) {
+	public ResponseEntity<Object> getApplicationRanking(HttpServletRequest request) {
 		List<CandidateRanked> candidateRanked = null;
 		try {
 			candidateRanked = dbMapperImpl.selectRankingData();
