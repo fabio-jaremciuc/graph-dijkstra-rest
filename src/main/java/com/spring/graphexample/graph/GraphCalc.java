@@ -1,7 +1,14 @@
 package com.spring.graphexample.graph;
 
-public class GraphCalc {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class GraphCalc {
+	
 	public Double getShortestPath(NodeWeighted start, NodeWeighted stop) {
 
 		// TODO: list to cicle and select the node of start and stop
@@ -14,6 +21,8 @@ public class GraphCalc {
 		NodeWeighted nodeF = new NodeWeighted("F");
 		NodeWeighted nodeG = new NodeWeighted("G");
 
+		log.info("node: {}", start);
+		
 		// Our addEdge method automatically adds Nodes as well.
 		// The addNode method is only there for unconnected Nodes,
 		// if we wish to add any
@@ -29,8 +38,10 @@ public class GraphCalc {
 		graphWeighted.addEdge(nodeF, nodeE, 1);
 		graphWeighted.addEdge(nodeF, nodeG, 8);
 
+		List<NodeWeighted> nodeList = Arrays.asList(nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG);
+						
 		// works
-		graphWeighted.DijkstraShortestPath(nodeA, nodeG);
+		graphWeighted.DijkstraShortestPath(start, stop);
 
 		//doesnt work
 		return graphWeighted.DijkstraShortestPath(nodeG, nodeG);
