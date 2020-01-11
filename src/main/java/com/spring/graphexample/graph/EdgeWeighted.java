@@ -1,10 +1,13 @@
 package com.spring.graphexample.graph;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class EdgeWeighted implements Comparable<EdgeWeighted>{
 
 	NodeWeighted source;
-    NodeWeighted destination;
-    double weight;
+	NodeWeighted destination;
+	double weight;
 	
     EdgeWeighted(NodeWeighted s, NodeWeighted d, double w) {
         // Note that we are choosing to use the (exact) same objects in the Edge class
@@ -16,7 +19,7 @@ public class EdgeWeighted implements Comparable<EdgeWeighted>{
         weight = w;
     }
     public String toString() {
-        return String.format("(%s -> %s, %f)", source.name, destination.name, weight);
+        return String.format("(%s -> %s, %f)", source.getName(), destination.getName(), weight);
     }
     
     public int compareTo(EdgeWeighted otherEdge) {

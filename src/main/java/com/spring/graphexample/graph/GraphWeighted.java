@@ -8,12 +8,12 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Component
 public class GraphWeighted {
@@ -62,23 +62,6 @@ public class GraphWeighted {
 		a.edges.add(new EdgeWeighted(a, b, weight));
 	}
 
-	public void printEdges() {
-		for (NodeWeighted node : nodes) {
-			LinkedList<EdgeWeighted> edges = node.edges;
-
-			if (edges.isEmpty()) {
-				System.out.println("Node " + node.name + " has no edges.");
-				continue;
-			}
-			System.out.print("Node " + node.name + " has edges to: ");
-
-			for (EdgeWeighted edge : edges) {
-				System.out.print(edge.destination.name + "(" + edge.weight + ") ");
-			}
-			System.out.println();
-		}
-	}
-
 	public boolean hasEdge(NodeWeighted source, NodeWeighted destination) {
 		LinkedList<EdgeWeighted> edges = source.edges;
 		for (EdgeWeighted edge : edges) {
@@ -89,12 +72,6 @@ public class GraphWeighted {
 			}
 		}
 		return false;
-	}
-
-	public void resetNodesVisited() {
-		for (NodeWeighted node : nodes) {
-			node.unvisit();
-		}
 	}
 
 	public Double dijkstraShortestPath(NodeWeighted start, NodeWeighted end) {
@@ -134,21 +111,19 @@ public class GraphWeighted {
 			// reachable node the path between start and end doesn't exist
 			// (they aren't connected)
 			if (currentNode == null) {
-				System.out.println("There isn't a path between " + start.name + " and " + end.name);
+				log.info("There isn't a path between {} and {}.", start.getName(), end.getName());
 				return null;
 			}
 
 			// If the closest non-visited node is our destination, we want to print the path
 			if (currentNode == end) {
-				System.out.println(
-						"The path with the smallest weight between " + start.name + " and " + end.name + " is:");
-
+				log.info("The path with the smallest weight between {} and {} is: ", start.getName(), end.getName());
 				NodeWeighted child = end;
 
 				// It makes no sense to use StringBuilder, since
 				// repeatedly adding to the beginning of the string
 				// defeats the purpose of using StringBuilder
-				String path = end.name;
+				String path = end.getName();
 				while (true) {
 					NodeWeighted parent = changedAt.get(child);
 					if (parent == null) {
@@ -158,11 +133,11 @@ public class GraphWeighted {
 					// Since our changedAt map keeps track of child -> parent relations
 					// in order to print the path we need to add the parent before the child and
 					// it's descendants
-					path = parent.name + " " + path;
+					path = parent.getName() + " " + path;
 					child = parent;
 				}
-				System.out.println(path);
-				System.out.println("The path costs: " + shortestPathMap.get(end));
+				log.info("The path with the smallest weight between {} and {} is: {}", start.getName(), end.getName(), path);
+				log.info("The shortest path costs: {}", shortestPathMap.get(end));
 				return shortestPathMap.get(end);
 			}
 			currentNode.visit();

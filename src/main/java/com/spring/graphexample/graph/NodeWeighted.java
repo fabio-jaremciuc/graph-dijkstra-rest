@@ -2,7 +2,6 @@ package com.spring.graphexample.graph;
 
 import java.util.LinkedList;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -10,7 +9,7 @@ public class NodeWeighted {
 	// The int n and String name are just arbitrary attributes
 	// we've chosen for our nodes these attributes can of course
 	// be whatever you need
-	String name;
+	private String name;
 	boolean visited;
 	LinkedList<EdgeWeighted> edges;
 
@@ -30,5 +29,13 @@ public class NodeWeighted {
 
 	void unvisit() {
 		visited = false;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

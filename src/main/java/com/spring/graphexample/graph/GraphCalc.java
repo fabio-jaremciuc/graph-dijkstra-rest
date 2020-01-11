@@ -34,11 +34,11 @@ public class GraphCalc {
 
 		List<NodeWeighted> nodeList = Arrays.asList(nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG);
 		List<NodeWeighted> nodeStartFiltered = nodeList.stream()
-														.filter(n -> n.name.equals(start.name))
+														.filter(n -> n.getName().equals(start.getName()))
 														.collect(Collectors.toList());
 
 		List<NodeWeighted> nodeStopFiltered = nodeList.stream()
-														.filter(n -> n.name.equals(stop.name))
+														.filter(n -> n.getName().equals(stop.getName()))
 														.collect(Collectors.toList());
 		
 		if (nodeStopFiltered != null && nodeStopFiltered.size() > 0 &&
