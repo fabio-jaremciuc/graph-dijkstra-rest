@@ -1,5 +1,7 @@
 package com.spring.graphexample.mapper;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +41,10 @@ public class MapperImpl implements GraphProjectMapper {
 
 	public void insertRankingData(CandidateRanked candidateRanked) {
 		graphMapper.insertRankingData(candidateRanked);
+	}
+
+	public List<CandidateRanked> selectRankingData() {
+		return graphMapper.selectRankingData();
 	}
 
 

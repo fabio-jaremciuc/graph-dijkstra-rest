@@ -1,5 +1,8 @@
 package com.spring.graphexample.service;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class GraphService {
 
 	public int calcExpirenceLevel(int candidateExpLevel, int jobExpLevel) {

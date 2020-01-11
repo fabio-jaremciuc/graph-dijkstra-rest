@@ -1,5 +1,7 @@
 package com.spring.graphexample.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -76,5 +78,16 @@ public interface GraphProjectMapper {
 		+ "#{candidateScore});"
 	})
 	public void insertRankingData(CandidateRanked candidateRanked);
+
+	@Select({
+		"SELECT * FROM RANKING ORDEr BY SCORE DESC;"
+	})
+	@Results(value = {
+			@Result(property = "candidateId", column = "CANDIDATE_ID"),
+			@Result(property = "candidateLocation", column = "CANDIDATE_LOCATION"),
+			@Result(property = "candidateLevel", column = "CANDIDATE_LEVEL"),
+			@Result(property = "candidateScore", column = "SCORE")
+	})
+	public List<CandidateRanked> selectRankingData();
 	
 }

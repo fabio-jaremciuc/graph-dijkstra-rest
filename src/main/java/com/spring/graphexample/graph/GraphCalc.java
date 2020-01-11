@@ -4,14 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class GraphCalc {
 	
 	public Double getShortestPath(NodeWeighted start, NodeWeighted stop) {
 
-		// TODO: list to cicle and select the node of start and stop
 		GraphWeighted graphWeighted = new GraphWeighted(true);
 		NodeWeighted nodeA = new NodeWeighted("A");
 		NodeWeighted nodeB = new NodeWeighted("B");
@@ -21,8 +17,6 @@ public class GraphCalc {
 		NodeWeighted nodeF = new NodeWeighted("F");
 		NodeWeighted nodeG = new NodeWeighted("G");
 
-		log.info("node: {}", start);
-		
 		// Our addEdge method automatically adds Nodes as well.
 		// The addNode method is only there for unconnected Nodes,
 		// if we wish to add any
@@ -40,11 +34,11 @@ public class GraphCalc {
 
 		List<NodeWeighted> nodeList = Arrays.asList(nodeA, nodeB, nodeC, nodeD, nodeE, nodeF, nodeG);
 		List<NodeWeighted> nodeStartFiltered = nodeList.stream()
-														.filter(n -> n.name == start.name)
+														.filter(n -> n.name.equals(start.name))
 														.collect(Collectors.toList());
 
 		List<NodeWeighted> nodeStopFiltered = nodeList.stream()
-														.filter(n -> n.name == stop.name)
+														.filter(n -> n.name.equals(stop.name))
 														.collect(Collectors.toList());
 		
 		if (nodeStopFiltered != null && nodeStopFiltered.size() > 0 &&
