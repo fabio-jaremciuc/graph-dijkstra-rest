@@ -17,8 +17,8 @@ import com.spring.graphexample.model.JobVacancy;
 public interface GraphProjectMapper {
 	
 	@Insert({
-		"INSERT INTO CANDIDATE(CANDIDATE_NAME, CANDIDATE_OCCUPATION, CANDIDATE_LOCATION, "
-		+ "CANDIDATE_LEVEL, CANDIDATE_APP_POSITION)",
+		"INSERT INTO candidate(candidate_name, candidate_occupation, candidate_location, "
+		+ "candidate_level, candidate_app_position)",
 		"VALUES("
 		+ "#{candidateName},"
 		+ "#{candidateOccupation}, "
@@ -28,22 +28,22 @@ public interface GraphProjectMapper {
 	})
 	public void insertCandidateData(Candidate candidate);
 
-	@Select({"SELECT MAX(CANDIDATE_ID) FROM CANDIDATE;"})
+	@Select({"SELECT MAX(candidate_id) FROM candidate;"})
 	public int getCandidateDataId();
 	
-	@Select({"SELECT * FROM CANDIDATE WHERE CANDIDATE_ID = #{candidateId};"})
+	@Select({"SELECT * FROM candidate WHERE candidate_id = #{candidateId};"})
 	@Results(value = {
-			@Result(property = "candidateId", column = "CANDIDATE_ID"),
-			@Result(property = "candidateName", column = "CANDIDATE_NAME"),
-			@Result(property = "candidateOccupation", column = "CANDIDATE_OCCUPATION"),
-			@Result(property = "candidateLocation", column = "CANDIDATE_LOCATION"),
-			@Result(property = "candidateLevel", column = "CANDIDATE_LEVEL"),
-			@Result(property = "candidateAppPosition", column = "CANDIDATE_APP_POSITION")
+			@Result(property = "candidateId", column = "candidate_id"),
+			@Result(property = "candidateName", column = "candidate_name"),
+			@Result(property = "candidateOccupation", column = "candidate_occupation"),
+			@Result(property = "candidateLocation", column = "candidate_location"),
+			@Result(property = "candidateLevel", column = "candidate_level"),
+			@Result(property = "candidateAppPosition", column = "candidate_app_position")
 	})
 	public Candidate selectCandidateData(@Param("candidateId") Integer candidateId);
 	
 	@Insert({
-		"INSERT INTO JOB(JOB_COMPANY, JOB_TITLE, JOB_DESCRIPTION, JOB_LOCATION, JOB_LEVEL)",
+		"INSERT INTO job(job_company, job_title, job_description, job_location, job_level)",
 		"VALUES("
 		+ "#{jobCompany},"
 		+ "#{jobTitle}, "
@@ -53,24 +53,24 @@ public interface GraphProjectMapper {
 	})
 	public void insertJobVacancyData(JobVacancy jobVacancy);
 
-	@Select({"SELECT MAX(JOB_ID) FROM JOB;"})
+	@Select({"SELECT MAX(job_id) FROM job;"})
 	public int getJobDataId();
 	
 	@Select({
-		"SELECT * FROM JOB WHERE JOB_ID = #{jobCompanyId};"
+		"SELECT * FROM job WHERE job_id = #{jobCompanyId};"
 	})
 	@Results(value = {
-			@Result(property = "jobCompanyId", column = "JOB_ID"),
-			@Result(property = "jobCompany", column = "JOB_COMPANY"),
-			@Result(property = "jobTitle", column = "JOB_TITLE"),
-			@Result(property = "jobDescription", column = "JOB_DESCRIPTION"),
-			@Result(property = "jobLocation", column = "JOB_LOCATION"),
-			@Result(property = "jobLevel", column = "JOB_LEVEL")
+			@Result(property = "jobCompanyId", column = "job_id"),
+			@Result(property = "jobCompany", column = "job_company"),
+			@Result(property = "jobTitle", column = "job_title"),
+			@Result(property = "jobDescription", column = "job_description"),
+			@Result(property = "jobLocation", column = "job_location"),
+			@Result(property = "jobLevel", column = "job_level")
 	})
 	public JobVacancy selectJobVacancyData(@Param("jobCompanyId") Integer jobCompanyId);
 	
 	@Insert({
-		"INSERT INTO RANKING(CANDIDATE_ID, CANDIDATE_LOCATION, CANDIDATE_LEVEL, SCORE)",
+		"INSERT INTO ranking(candidate_id, raking_location, raking_level, score)",
 		"VALUES("
 		+ "#{candidateId},"
 		+ "#{candidateLocation}, "
@@ -80,13 +80,13 @@ public interface GraphProjectMapper {
 	public void insertRankingData(CandidateRanked candidateRanked);
 
 	@Select({
-		"SELECT * FROM RANKING ORDEr BY SCORE DESC;"
+		"SELECT * FROM ranking ORDER BY CAST(score AS UNSIGNED) DESC;"
 	})
 	@Results(value = {
-			@Result(property = "candidateId", column = "CANDIDATE_ID"),
-			@Result(property = "candidateLocation", column = "CANDIDATE_LOCATION"),
-			@Result(property = "candidateLevel", column = "CANDIDATE_LEVEL"),
-			@Result(property = "candidateScore", column = "SCORE")
+			@Result(property = "candidateId", column = "candidate_id"),
+			@Result(property = "candidateLocation", column = "raking_location"),
+			@Result(property = "candidateLevel", column = "raking_level"),
+			@Result(property = "candidateScore", column = "score")
 	})
 	public List<CandidateRanked> selectRankingData();
 	

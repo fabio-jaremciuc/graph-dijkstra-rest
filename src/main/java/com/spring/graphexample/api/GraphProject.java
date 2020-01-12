@@ -33,9 +33,9 @@ public interface GraphProject {
 	@PostMapping(value = "/candidate", produces = { "application/json" })
 	ResponseEntity<Object> insertCandidate(@RequestBody Candidate candidate, HttpServletRequest request);
 
-	@ApiOperation(value = "API for entering new vacancies", 
+	@ApiOperation(value = "API for entering new job vacancies", 
 			nickname = "insertJobVacancies", 
-			notes = "API for entering new vacancies", 
+			notes = "API for entering new job vacancies", 
 			response = ResponseEntity.class, tags = {"Vacancy"})
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Accepted", response = JobVacancy.class),
