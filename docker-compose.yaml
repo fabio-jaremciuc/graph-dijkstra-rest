@@ -2,9 +2,27 @@ version: '3'
 services: 
   mysql:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./mysql.dockerfile
       context: .
     image: fabioj/mysql_vacancy_matching
     container_name: mysql
     ports:
       - "3306:3306"
+    networks:
+      - spring-network
+      
+  graph-dijkstra-rest-container:
+    build:
+      context: .
+      dockerfile: ./spring.dockerfile
+    image: fabioj/graph-dijkstra-rest
+    container_name: graph-dijkstra-rest-container
+    ports: 
+      - "8080:8080"
+    networks:
+      - spring-network
+    depends_on:
+      - "mysql"
+      
+networks:
+  spring-network:
