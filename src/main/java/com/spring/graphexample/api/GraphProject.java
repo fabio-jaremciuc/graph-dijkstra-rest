@@ -11,6 +11,7 @@ import com.spring.graphexample.exception.ErrorDetail;
 import com.spring.graphexample.model.Candidate;
 import com.spring.graphexample.model.CandidateRanked;
 import com.spring.graphexample.model.CandidateSuccessResp;
+import com.spring.graphexample.model.CandidatesRanking;
 import com.spring.graphexample.model.JobApplication;
 import com.spring.graphexample.model.JobSuccessResp;
 import com.spring.graphexample.model.JobVacancy;
@@ -74,7 +75,7 @@ public interface GraphProject {
 			notes = "API to get the ranking", 
 			response = ResponseEntity.class, tags = {"ranking"})
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Accepted", response = CandidateRanked.class),
+			@ApiResponse(code = 200, message = "Accepted", response = CandidatesRanking.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = ErrorDetail.class),
 			@ApiResponse(code = 403, message = "Forbidden", response = ErrorDetail.class),
 			@ApiResponse(code = 404, message = "Not Found"),
