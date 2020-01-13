@@ -21,12 +21,6 @@ public class SwaggerDocumentationConfig {
                 .build()
                 .directModelSubstitute(LocalDate.class, java.sql.Date.class)
                 .directModelSubstitute(OffsetDateTime.class, java.util.Date.class)
-                // Tutte le API richiedono il cookie "LtpaToken2"; centralizziamo
-                // qui la sua documentazione, descrivendolo come header "Cookie"
-                // perche' Swagger/OpenAPI 2.0 non contempla i cookie:
-                // https://swagger.io/docs/specification/2-0/describing-parameters/
-                // Con required=false in @CookieValue funziona anche
-                // l'invocazione delle API da /swagger-ui.html !!!
                 .globalOperationParameters(null)
                 .apiInfo(new ApiInfoBuilder()
                         .title("Graph Dijkstra REST API")

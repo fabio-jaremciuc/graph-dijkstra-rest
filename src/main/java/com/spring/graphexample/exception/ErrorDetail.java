@@ -1,13 +1,19 @@
 package com.spring.graphexample.exception;
 
-import org.springframework.validation.annotation.Validated;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@Validated
+@JsonPropertyOrder({
+	"status",
+	"code",
+	"message"
+})
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorDetail {
