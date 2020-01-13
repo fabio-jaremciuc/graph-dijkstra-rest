@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.spring.graphexample.exception.ErrorDetail;
 import com.spring.graphexample.model.Candidate;
 import com.spring.graphexample.model.CandidateRanked;
+import com.spring.graphexample.model.CandidateSuccessResp;
 import com.spring.graphexample.model.JobApplication;
+import com.spring.graphexample.model.JobSuccessResp;
 import com.spring.graphexample.model.JobVacancy;
 
 import io.swagger.annotations.Api;
@@ -27,7 +29,7 @@ public interface GraphProject {
 			notes = "API for entering new candidates", 
 			response = ResponseEntity.class, tags = {"candidate"})
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Accepted", response = Candidate.class),
+			@ApiResponse(code = 200, message = "Accepted", response = CandidateSuccessResp.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = ErrorDetail.class),
 			@ApiResponse(code = 403, message = "Forbidden", response = ErrorDetail.class),
 			@ApiResponse(code = 404, message = "Not Found"),
@@ -42,7 +44,7 @@ public interface GraphProject {
 			notes = "API for entering new job vacancies", 
 			response = ResponseEntity.class, tags = {"vacancy"})
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Accepted", response = JobVacancy.class),
+			@ApiResponse(code = 200, message = "Accepted", response = JobSuccessResp.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = ErrorDetail.class),
 			@ApiResponse(code = 403, message = "Forbidden", response = ErrorDetail.class),
 			@ApiResponse(code = 404, message = "Not Found"),

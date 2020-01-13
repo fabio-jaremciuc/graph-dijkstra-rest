@@ -1,5 +1,8 @@
 package com.spring.graphexample.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -10,35 +13,55 @@ import com.spring.graphexample.model.JobVacancy;
 @Component
 public class ModelFieldsValidation {
 
-	public boolean candidateFieldsVerify(Candidate candidate) {
-		if (StringUtils.isNotEmpty(candidate.getCandidateName()) &&
-			StringUtils.isNotEmpty(candidate.getCandidateOccupation()) &&
-			StringUtils.isNotEmpty(candidate.getCandidateLocation()) &&
-			candidate.getCandidateLevel() != 0 &&
-			StringUtils.isNotEmpty(candidate.getCandidateAppPosition())) {			
-			return true;
-		} else {
-			return false;
+	public List<String> candidateFieldsVerify(Candidate candidate) {
+		List<String> emptyParams = new ArrayList<>();
+		if (StringUtils.isEmpty(candidate.getCandidateName())){
+			emptyParams.add("candidateName");
 		}
+		if (StringUtils.isEmpty(candidate.getCandidateOccupation())) {
+			emptyParams.add("candidateOccupation");
+		}
+		if (StringUtils.isEmpty(candidate.getCandidateLocation())) {
+			emptyParams.add("candidateLocation");
+		}
+		if (candidate.getCandidateLevel() == 0) {
+			emptyParams.add("candidateLevel");
+		}
+		if (StringUtils.isEmpty(candidate.getCandidateAppPosition())) {
+			emptyParams.add("candidateAppPosition");
+		}
+		return emptyParams;
 	}
 
-	public boolean jobVacancyFieldsVerify(JobVacancy jobVacancy) {
-		if (StringUtils.isNotEmpty(jobVacancy.getJobCompany()) &&
-			StringUtils.isNotEmpty(jobVacancy.getJobTitle()) &&
-			StringUtils.isNotEmpty(jobVacancy.getJobDescription()) &&
-			StringUtils.isNotEmpty(jobVacancy.getJobLocation()) &&
-			jobVacancy.getJobLevel() != 0) {			
-			return true;
-		} else {
-			return false;
+	public List<String> jobVacancyFieldsVerify(JobVacancy jobVacancy) {
+		List<String> emptyParams = new ArrayList<>();
+		
+		if (StringUtils.isEmpty(jobVacancy.getJobCompany())) {
+			emptyParams.add("jobCompany");
 		}
+		if (StringUtils.isEmpty(jobVacancy.getJobTitle())) {
+			emptyParams.add("jobTitle");
+		}
+		if (StringUtils.isEmpty(jobVacancy.getJobDescription())) {
+			emptyParams.add("jobDescription");
+		}
+		if (StringUtils.isEmpty(jobVacancy.getJobLocation())) {
+			emptyParams.add("jobLocation");
+		}
+		if (jobVacancy.getJobLevel() == 0) {
+			emptyParams.add("jobLevel");
+		}
+		return emptyParams;
 	}
 
-	public boolean jobApplicationFieldsVerify(JobApplication jobApplication) {
-		if (jobApplication.getIdCandidate() != 0 && jobApplication.getIdVacancy() != 0) {			
-			return true;
-		} else {
-			return false;
+	public List<String> jobApplicationFieldsVerify(JobApplication jobApplication) {
+		List<String> emptyParams = new ArrayList<>();
+		if (jobApplication.getIdCandidate() == 0) {
+			emptyParams.add("idCandidate");
 		}
+		if (jobApplication.getIdVacancy() == 0) {
+			emptyParams.add("idVacancy");
+		}
+		return emptyParams;
 	}
 }

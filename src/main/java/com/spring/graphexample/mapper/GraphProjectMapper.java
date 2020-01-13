@@ -70,7 +70,7 @@ public interface GraphProjectMapper {
 	public JobVacancy selectJobVacancyData(@Param("jobCompanyId") Integer jobCompanyId);
 	
 	@Insert({
-		"INSERT INTO ranking(candidate_id, raking_location, raking_level, score)",
+		"INSERT INTO ranking(candidate_id, ranking_location, ranking_level, score)",
 		"VALUES("
 		+ "#{candidateId},"
 		+ "#{candidateLocation}, "
@@ -84,8 +84,8 @@ public interface GraphProjectMapper {
 	})
 	@Results(value = {
 			@Result(property = "candidateId", column = "candidate_id"),
-			@Result(property = "candidateLocation", column = "raking_location"),
-			@Result(property = "candidateLevel", column = "raking_level"),
+			@Result(property = "candidateLocation", column = "ranking_location"),
+			@Result(property = "candidateLevel", column = "ranking_level"),
 			@Result(property = "candidateScore", column = "score")
 	})
 	public List<CandidateRanked> selectRankingData();

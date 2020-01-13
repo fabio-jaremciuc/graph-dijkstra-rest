@@ -24,8 +24,8 @@ CREATE TABLE candidate (
 
 CREATE TABLE ranking (
   candidate_id SMALLINT UNSIGNED NOT NULL,
-  raking_location VARCHAR(45) NOT NULL,
-  raking_level SMALLINT UNSIGNED NOT NULL,
+  ranking_location VARCHAR(45) NOT NULL,
+  ranking_level SMALLINT UNSIGNED NOT NULL,
   score VARCHAR(45) NOT NULL,
   PRIMARY KEY  (candidate_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
