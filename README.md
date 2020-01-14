@@ -34,7 +34,7 @@ To set the value of D, find the shortest distance between the candidate and the 
 **Shortest distance between applicant and vacancy** | **D**
 -------------------------------------------------- | -------------
 0 to 6 | 100
-greater than 6.0 up to 8.75 | 75
+greater than 6 up to 8.75 | 75
 greater than 8.75 up to 13.75 | 50
 greater than 13.75 up to 18.75 | 25
 greater than 18.75 up to 20 | 0
@@ -46,31 +46,109 @@ Request to register job openings:
 `POST http://localhost:8080/graph/v1/vacancy`
 
 * Body:
+```
+{
+	"jobCompany": "Google",
+	"jobTitle": "Engineer",
+	"jobDescription": "Golang Specialist Developer",
+	"jobLocation": "G",
+	"jobLevel": 5
+}
+```
+* Response:
+```
+{
+    "status": "Success!",
+    "message": "New Entry!",
+    "data": {
+        "jobCompanyId": 1,
+        "jobCompany": "Google",
+        "jobTitle": "Engineer",
+        "jobDescription": "Golang Specialist Developer",
+        "jobLocation": "G",
+        "jobLevel": 5
+    }
+}
+```
 
-Response:
 
 Request to register candidates:
 
 `POST http://localhost:8080/graph/v1/candidate`
 
 * Body:
+```
+{
+	"candidateName":"John Doe",
+	"candidateOccupation":"Engineer",
+	"candidateLocation":"e",
+	"candidateLevel":5,
+	"candidateAppPosition":"DevOps Specialist"
+}
+```
+* Response:
 
-Response:
+```
+{
+    "status": "Success!",
+    "message": "New Entry!",
+    "data": {
+        "candidateId": 1,
+        "candidateName": "John Doe",
+        "candidateOccupation": "Engineer",
+        "candidateLocation": "E",
+        "candidateLevel": 5,
+        "candidateAppPosition": "DevOps Specialist"
+    }
+}
+```
 
 Request to applying for a vacancy:
 
 `POST http://localhost:8080/graph/v1/application`
 
 * Body:
+```
+{
+	"idVacancy": 1,
+	"idCandidate": 1
+}
+```
+* Response:
+```
+{ 
+  "candidateId":1,
+  "candidateLocation":"E",
+  "candidateLevel":5,
+  "candidateScore":100
+}
+```
 
-Response:
 
 Request to return candidates for a vacancy, sorted by score (descending):
 
 `GET http://localhost:8080/graph/v1/application/ranking`
 
-Response:
+* Response:
+```
+[
+    {
+        "candidateId": 1,
+        "candidateLocation": "E",
+        "candidateLevel": 5,
+        "candidateScore": 100
+    }, ...
+]
+```
 
+Response error message example:
+```
+{
+    "status": "Error",
+    "code": 400,
+    "message": "The following required parameters are missing: [candidateLocation]"
+}
+```
 ## Deployment
 `TBD`
 
