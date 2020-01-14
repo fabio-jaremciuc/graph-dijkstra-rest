@@ -14,16 +14,16 @@ public class GraphService {
 		if (shortestPath <= 5.0) {
 			return 100;
 		}
-		if (5.0 < shortestPath && shortestPath <= 10.0) {
+		if (3.75 < shortestPath && shortestPath <= 8.75) {
 			return 75;
 		}
-		if (10.0 < shortestPath && shortestPath <= 15.0) {
+		if (8.75 < shortestPath && shortestPath <= 13.75) {
 			return 50;
 		}
-		if (15.0 < shortestPath && shortestPath <= 20.0) {
+		if (13.75 < shortestPath && shortestPath <= 18.75) {
 			return 25;
 		}
-		if (20.0 < shortestPath) {
+		if (18.75 < shortestPath) {
 			return 0;
 		}
 		return 0;

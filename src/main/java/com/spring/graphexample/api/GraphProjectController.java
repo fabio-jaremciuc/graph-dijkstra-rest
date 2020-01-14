@@ -108,7 +108,6 @@ public class GraphProjectController implements GraphProject {
 					+ "have no connection or are not registered in the system"));
 		}
 		int pathPoints = graphService.calcPathPoints(shortestPath);
-		
 		int experienceCandidateLevel = graphService.calcExpirenceLevel(candidateData.getCandidateLevel(), 
 				jobVacancyData.getJobLevel());
 		int candidateFinalScore = graphService.calcScoreCandidate(experienceCandidateLevel, pathPoints);

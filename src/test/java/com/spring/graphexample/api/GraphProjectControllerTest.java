@@ -24,13 +24,13 @@ class GraphProjectControllerTest {
 	@Autowired
 	private GraphProject graph;
 
-	private static MockHttpServletRequest request = new MockHttpServletRequest();
+	private static MockHttpServletRequest REQUEST = new MockHttpServletRequest();
 	
 	@Before
 	public void loadRequest() {
-		request.setServerName("www.example.com");
-		request.setRequestURI("/test");
-		request.setMethod("Post");	
+		REQUEST.setServerName("www.example.com");
+		REQUEST.setRequestURI("/test");
+		REQUEST.setMethod("Post");	
 	}
 	
 	Candidate candidate = new Candidate(0, "candidateNameTest", "candidateOccupationTest", "A", 
@@ -40,30 +40,30 @@ class GraphProjectControllerTest {
 	
 	@Test
 	final void insertCandidateSuccessTest() {
-		ResponseEntity<Object> response = graph.insertCandidate(candidate, request);
+		ResponseEntity<Object> response = graph.insertCandidate(candidate, REQUEST);
 		assertEquals(200, response.getStatusCodeValue());
 	}
 
 	@Test
 	final void insertJobVacanciesTest() {
-		ResponseEntity<Object> response = graph.insertJobVacancies(jobVacancy, request);
+		ResponseEntity<Object> response = graph.insertJobVacancies(jobVacancy, REQUEST);
 		assertEquals(200, response.getStatusCodeValue());
 	}
 
 	@Test
 	final void insertJobApplicationTest() {
-		graph.insertCandidate(candidate, request);
-		graph.insertJobVacancies(jobVacancy, request);
-		ResponseEntity<Object> response = graph.insertJobApplication(jobApplication, request);
+		graph.insertCandidate(candidate, REQUEST);
+		graph.insertJobVacancies(jobVacancy, REQUEST);
+		ResponseEntity<Object> response = graph.insertJobApplication(jobApplication, REQUEST);
 		assertEquals(200, response.getStatusCodeValue());
 	}
 
 	@Test
 	final void getApplicationRankingTest() {
-		graph.insertCandidate(candidate, request);
-		graph.insertJobVacancies(jobVacancy, request);
-		graph.insertJobApplication(jobApplication, request);
-		ResponseEntity<Object> response = graph.getApplicationRanking(request);
+		graph.insertCandidate(candidate, REQUEST);
+		graph.insertJobVacancies(jobVacancy, REQUEST);
+		graph.insertJobApplication(jobApplication, REQUEST);
+		ResponseEntity<Object> response = graph.getApplicationRanking(REQUEST);
 		assertEquals(404, response.getStatusCodeValue());
 	}
 	
