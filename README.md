@@ -33,8 +33,8 @@ To set the value of D, find the shortest distance between the candidate and the 
 
 **Shortest distance between applicant and vacancy** | **D**
 -------------------------------------------------- | -------------
-0 to 3.75 | 100
-greater than 3.75 up to 8.75 | 75
+0 to 6 | 100
+greater than 6.0 up to 8.75 | 75
 greater than 8.75 up to 13.75 | 50
 greater than 13.75 up to 18.75 | 25
 greater than 18.75 up to 20 | 0
@@ -43,7 +43,7 @@ greater than 18.75 up to 20 | 0
 
 Request to register job openings:
 
-`POST http://localhost:8080/v1/vacancy`
+`POST http://localhost:8080/graph/v1/vacancy`
 
 * Body:
 
@@ -51,7 +51,7 @@ Response:
 
 Request to register candidates:
 
-`POST http://localhost:8080/v1/candidate`
+`POST http://localhost:8080/graph/v1/candidate`
 
 * Body:
 
@@ -59,7 +59,7 @@ Response:
 
 Request to applying for a vacancy:
 
-`POST http://localhost:8080/v1/application`
+`POST http://localhost:8080/graph/v1/application`
 
 * Body:
 
@@ -67,7 +67,7 @@ Response:
 
 Request to return candidates for a vacancy, sorted by score (descending):
 
-`GET http://localhost:8080/v1/application/ranking`
+`GET http://localhost:8080/graph/v1/application/ranking`
 
 Response:
 
@@ -75,15 +75,15 @@ Response:
 `TBD`
 
 ## Built With
-* **[Spring Boot](https://spring.io/projects/spring-boot)** - The framework used
-* **[Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)** - The container software and container orchestrator used
-* **[MySQL](https://www.mysql.com/)** - The Database Management System used
-* **[H2](https://www.h2database.com/html/main.html)** - The in-memory database used for the tests
-* **[MyBatis](https://mybatis.org/mybatis-3/)** - The persistence framework used
-* **[SpringFox](https://springfox.github.io/springfox/)** - The framework used to build the [Swagger](https://swagger.io/) documentation in Java Runtime
+* [Spring Boot](https://spring.io/projects/spring-boot) - The framework used
+* [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) - The container software and container orchestrator used
+* [MySQL](https://www.mysql.com/) - The Database Management System used
+* [H2](https://www.h2database.com/html/main.html) - The in-memory database used for the tests
+* [MyBatis](https://mybatis.org/mybatis-3/) - The persistence framework used
+* [SpringFox](https://springfox.github.io/springfox/) - The framework used to build the [Swagger](https://swagger.io/) documentation in Java Runtime
 
 ## Author
-* **[Fabio Jaremciuc](https://www.linkedin.com/in/fabio-jaremciuc-5b508343/)**  - Initial work 
+* [Fabio Jaremciuc](https://www.linkedin.com/in/fabio-jaremciuc-5b508343/)  - Initial work 
 
 ## License
 This project is licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License)
