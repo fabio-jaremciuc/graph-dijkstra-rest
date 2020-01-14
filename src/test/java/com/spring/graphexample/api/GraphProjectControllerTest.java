@@ -34,7 +34,7 @@ class GraphProjectControllerTest {
 	}
 	
 	Candidate candidate = new Candidate(0, "candidateNameTest", "candidateOccupationTest", "A", 
-			5, "candidateAppPosition");
+			1, "candidateAppPosition");
 	JobVacancy jobVacancy = new JobVacancy(0, "jobCompanyTest", "jobTitleTest", "jobDescriptionTest", "G", 5);
 	JobApplication jobApplication = new JobApplication(1, 1);
 	

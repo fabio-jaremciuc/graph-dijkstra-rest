@@ -1,11 +1,11 @@
 version: '3'
 services: 
-  mysql:
+  mysql_db:
     build:
       dockerfile: ./mysql.dockerfile
       context: .
     image: fabioj/mysql_vacancy_matching
-    container_name: mysql
+    container_name: mysql-db-container
     ports:
       - "3306:3306"
     networks:
@@ -22,7 +22,7 @@ services:
     networks:
       - spring-network
     depends_on:
-      - "mysql"
+      - "mysql_db"
       
 networks:
   spring-network:

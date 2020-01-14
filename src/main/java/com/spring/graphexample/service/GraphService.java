@@ -11,10 +11,10 @@ public class GraphService {
 	}
 	
 	public int calcPathPoints(Double shortestPath) {
-		if (shortestPath <= 5.0) {
+		if (shortestPath <= 6.0) {
 			return 100;
 		}
-		if (3.75 < shortestPath && shortestPath <= 8.75) {
+		if (6.0 < shortestPath && shortestPath <= 8.75) {
 			return 75;
 		}
 		if (8.75 < shortestPath && shortestPath <= 13.75) {

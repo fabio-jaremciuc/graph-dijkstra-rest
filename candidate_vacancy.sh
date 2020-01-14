@@ -16,7 +16,7 @@ curl -X POST http://localhost:8080/graph/v1/candidate \
 
 curl -X POST http://localhost:8080/graph/v1/candidate \
 	-H "Content-Type: application/json" \
-	-d '{"candidateName":"Pluto","candidateOccupation":"Developer","candidateLocation":"d", "candidateLevel":5, "candidateAppPosition":"Engineer"}'
+	-d '{"candidateName":"Pluto","candidateOccupation":"Developer","candidateLocation":"e", "candidateLevel":5, "candidateAppPosition":"Engineer"}'
 	
 curl -X POST http://localhost:8080/graph/v1/candidate \
 	-H "Content-Type: application/json" \
@@ -24,7 +24,7 @@ curl -X POST http://localhost:8080/graph/v1/candidate \
 	
 curl -X POST http://localhost:8080/graph/v1/candidate \
 	-H "Content-Type: application/json" \
-	-d '{"candidateName":"Jean Someres","candidateOccupation":"Developer","candidateLocation":"d", "candidateLevel":1, "candidateAppPosition":"Engineer"}'
+	-d '{"candidateName":"Jean Somers","candidateOccupation":"Developer","candidateLocation":"d", "candidateLevel":1, "candidateAppPosition":"Engineer"}'
 
 curl -X POST http://localhost:8080/graph/v1/candidate \
 	-H "Content-Type: application/json" \
