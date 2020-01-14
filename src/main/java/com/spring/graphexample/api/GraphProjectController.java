@@ -107,10 +107,11 @@ public class GraphProjectController implements GraphProject {
 			return ResponseEntity.status(500).body(new ErrorDetail("Error", 500, "Bad Request - Inserted nodes "
 					+ "have no connection or are not registered in the system"));
 		}
+		int pathPoints = graphService.calcPathPoints(shortestPath);
 		
 		int experienceCandidateLevel = graphService.calcExpirenceLevel(candidateData.getCandidateLevel(), 
 				jobVacancyData.getJobLevel());
-		int candidateFinalScore = graphService.calcScoreCandidate(experienceCandidateLevel, shortestPath);
+		int candidateFinalScore = graphService.calcScoreCandidate(experienceCandidateLevel, pathPoints);
 		CandidateRanked candidateRanked = setCandidateRankedData(candidateData, candidateFinalScore);
 		
 		try {

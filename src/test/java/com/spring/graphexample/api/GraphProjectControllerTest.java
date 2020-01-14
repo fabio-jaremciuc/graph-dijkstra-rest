@@ -58,4 +58,13 @@ class GraphProjectControllerTest {
 		assertEquals(200, response.getStatusCodeValue());
 	}
 
+	@Test
+	final void getApplicationRankingTest() {
+		graph.insertCandidate(candidate, request);
+		graph.insertJobVacancies(jobVacancy, request);
+		graph.insertJobApplication(jobApplication, request);
+		ResponseEntity<Object> response = graph.getApplicationRanking(request);
+		assertEquals(404, response.getStatusCodeValue());
+	}
+	
 }

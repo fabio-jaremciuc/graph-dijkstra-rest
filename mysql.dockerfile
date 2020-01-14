@@ -2,5 +2,5 @@ FROM mysql:latest
 ENV MYSQL_ROOT_PASSWORD root
 ENV MYSQL_DATABASE root
 ENV MYSQL_USER root
-COPY ./create_tables.sql /docker-entrypoint-initdb.d/create_tables.sql
+COPY ./schema.sql /docker-entrypoint-initdb.d/schema.sql
 EXPOSE 3306
