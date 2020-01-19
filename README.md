@@ -150,7 +150,22 @@ Response error message example:
 }
 ```
 ## Deployment
-`TBD`
+To deploy the application just launch the command below in the main folder:
+
+`docker-compose up --build`
+
+
+Docker Compose will create two containers with Spring API output on port 8080 and MySQL on port 3306. To test the success of the deploy, just check the documentation at http://localhost:8080/swagger-ui.html.
+
+To insert a test dataset, run the scripts in the main folder:
+
+
+1. `sh candidate_vacancy.sh`
+2. `sh candidature.sh`
+
+
+The ranking will be available on the endpoint GET http://localhost:8080/graph/v1/application/ranking.
+
 
 ## Built With
 * [Spring Boot](https://spring.io/projects/spring-boot) - The framework used
