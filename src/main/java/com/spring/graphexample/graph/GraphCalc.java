@@ -17,9 +17,6 @@ public class GraphCalc {
 		NodeWeighted nodeF = new NodeWeighted("F");
 		NodeWeighted nodeG = new NodeWeighted("G");
 
-		// Our addEdge method automatically adds Nodes as well.
-		// The addNode method is only there for unconnected Nodes,
-		// if we wish to add any
 		graphWeighted.addEdge(nodeA, nodeB, 8);
 		graphWeighted.addEdge(nodeA, nodeC, 11);
 		graphWeighted.addEdge(nodeB, nodeD, 3);

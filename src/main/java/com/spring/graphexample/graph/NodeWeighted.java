@@ -6,9 +6,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class NodeWeighted {
-	// The int n and String name are just arbitrary attributes
-	// we've chosen for our nodes these attributes can of course
-	// be whatever you need
 	private String name;
 	boolean visited;
 	LinkedList<EdgeWeighted> edges;
